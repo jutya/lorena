@@ -17,9 +17,43 @@ namespace test_combobox
         {
             InitializeComponent();
             button1.Enabled = false;
-            //SqlDbType
+            LoadData();
         }
+        private void LoadData()
+        {
+            string connectString = "Data Source=test.db;";
 
+            SQLiteConnection sqlConnection = new SQLiteConnection(connectString);
+
+            sqlConnection.Open();
+
+            string query = "SELECT id, name, disc, depend, comment, depend_tree FROM lorena";
+
+            SQLiteCommand sqlCmd = new SQLiteCommand(query, sqlConnection);
+
+            SQLiteDataReader reader = sqlCmd.ExecuteReader();
+
+            List<string[]> data = new List<string[]>();
+
+            while (reader.Read())
+            {
+                data.Add(new string[6]);
+
+                data[data.Count-1][0] = reader[0].ToString();
+                data[data.Count-1][1] = reader[1].ToString();
+                data[data.Count-1][2] = reader[2].ToString();
+                data[data.Count-1][3] = reader[3].ToString();
+                data[data.Count-1][4] = reader[4].ToString();
+                data[data.Count-1][5] = reader[5].ToString();
+            }
+
+            reader.Close();
+
+            sqlConnection.Close();
+
+             foreach (string[] s in data)
+             dataGridView1.Rows.Add(s);
+        }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if ((textBox1.Text.Length == 0) || (comboBox1.SelectedIndex == -1))
@@ -28,14 +62,11 @@ namespace test_combobox
                 button1.Enabled = true;
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+       
+        public void button1_Click(object sender, EventArgs e)
         {
             double coint, coint1;
+            double c;
             // String salon;
             double disc = 0, discPr = 0;
             try
@@ -59,16 +90,18 @@ namespace test_combobox
 
 
                 coint1 = coint - (coint * (disc + discPr) / 100); // рассчитываем итоговую цену
-
+                c = coint1;
+                
                 label5.Text = coint1.ToString("n"); // выводим данные на форму
             }
+            
             catch
             {
                 textBox1.Focus();
+                
             }
-            //c = conv double (textBox1.Text);
-            //num = Console
-            //тут прописываем передачу данных "название салона" и начальная цена, вызываем метод расчета и выводим результат в текстбокс2
+
+           
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -102,20 +135,10 @@ namespace test_combobox
                 return;
             }
             e.Handled = true;
-
-
-
-
-
-
+            
         }
 
-
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-    } 
+       
+    }
+    
 }

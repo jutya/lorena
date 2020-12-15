@@ -14,17 +14,17 @@ namespace test_combobox
         /// </summary>
         [STAThread]
         static void Main()
-        { 
+        {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-           if(!System.IO.File.Exists("test.db")) SQLiteConnection.CreateFile("test.db");
+            if (!System.IO.File.Exists("test.db")) SQLiteConnection.CreateFile("test.db");
 
             SQLiteConnection connection = new SQLiteConnection("Data Source=test.db;Version=3;datetimeformat=CurrentCulture;");
             connection.Open();
             string sql = "CREATE TABLE lorena(id integer primary key AUTOINCREMENT NOT NULL, name TEXT, disc FLOAT, depend INT, comment VARCHAR(124), depend_tree INT, disc1 FLOAT);";
             SQLiteCommand command = new SQLiteCommand(connection);
-            
+
             command.CommandText = sql;
             command.ExecuteNonQuery();
 
@@ -44,7 +44,7 @@ namespace test_combobox
             command.ExecuteNonQuery();
 
             connection.Close();
-
+            
         }
     }
 }
