@@ -66,8 +66,6 @@ namespace test_combobox
         public void button1_Click(object sender, EventArgs e)
         {
             double coint, coint1;
-            double c;
-            // String salon;
             double disc = 0, discPr = 0;
             try
             {
@@ -90,8 +88,7 @@ namespace test_combobox
 
 
                 coint1 = coint - (coint * (disc + discPr) / 100); // рассчитываем итоговую цену
-                c = coint1;
-                
+                        
                 label5.Text = coint1.ToString("n"); // выводим данные на форму
             }
             
